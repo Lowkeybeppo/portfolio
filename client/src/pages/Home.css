@@ -1,0 +1,160 @@
+.home-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.navbar {
+  background-color: #282c34;
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.navbar nav {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar nav button {
+  background: none;
+  color: white;
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar nav button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main-content {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  width: 100%;
+}
+
+.page {
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.page h2 {
+  margin-bottom: 20px;
+  color: #282c34;
+}
+
+.page p {
+  color: #666;
+  font-size: 16px;
+}
+
+.leaderboard-section {
+  background-color: white;
+  border: 2px solid #333;
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.leaderboard-section h2 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.leaderboard-section > p {
+  font-size: 14px;
+  color: #666;
+}
+
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.leaderboard-item {
+  display: grid;
+  grid-template-columns: 30px 1fr 50px;
+  gap: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  align-items: center;
+}
+
+.leaderboard-item span:first-child {
+  font-weight: bold;
+}
+
+.leaderboard-item span:last-child {
+  text-align: right;
+  font-weight: bold;
+}
+
+.btn-primary {
+  padding: 12px 24px;
+  background-color: white;
+  border: 2px solid #333;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #333;
+  color: white;
+}
+
+.info-text {
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+}
+
+.game-section {
+  background-color: white;
+  border: 2px solid #333;
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    grid-template-columns: 1fr;
+  }
+
+  .leaderboard-list {
+    max-height: none;
+  }
+}
