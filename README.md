@@ -4,12 +4,12 @@ A full-stack MERN application featuring a portfolio site with an integrated Word
 
 ## Features
 
-- 🎮 **Wordle Game** - Interactive word guessing game
-- 👤 **User Authentication** - Register and login (no email verification required)
-- 📊 **User Stats** - Track game performance and statistics
-- 🔐 **Admin Panel** - CRUD operations on users and game data
-- 🗑️ **Account Deletion** - Users can delete their own accounts
-- 🏆 **Leaderboard** - Global player rankings
+-  **Wordle Game** - Interactive word guessing game
+-  **User Authentication** - Register and login (no email verification required)
+-  **User Stats** - Track game performance and statistics
+-  **Admin Panel** - CRUD operations on users and game data
+-  **Account Deletion** - Users can delete their own accounts
+-  **Leaderboard** - Global player rankings
 
 ## Tech Stack
 
