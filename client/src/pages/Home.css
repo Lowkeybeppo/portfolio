@@ -2,88 +2,41 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
-}
-
-.navbar {
-  background-color: #282c34;
-  color: white;
-  padding: 20px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar h1 {
-  margin: 0;
-  font-size: 28px;
-}
-
-.navbar nav {
-  display: flex;
-  gap: 20px;
-}
-
-.navbar nav button {
-  background: none;
-  color: white;
-  font-size: 16px;
-  padding: 8px 16px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-.navbar nav button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.main-content {
-  flex: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
   width: 100%;
+  align-items: start;
 }
 
-.page {
-  background-color: white;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.home-left,
+.home-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.page h2 {
-  margin-bottom: 20px;
-  color: #282c34;
-}
-
-.page p {
-  color: #666;
-  font-size: 16px;
-}
-
-.leaderboard-section {
+.leaderboard-section,
+.game-section,
+.portfolio-section {
   background-color: white;
   border: 2px solid #333;
   border-radius: 20px;
-  padding: 40px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.leaderboard-section {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
 .leaderboard-section h2 {
+  margin: 0;
   font-size: 28px;
   font-weight: bold;
 }
 
 .leaderboard-section > p {
+  margin: 0;
   font-size: 14px;
   color: #666;
 }
@@ -92,8 +45,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  flex: 1;
-  max-height: 400px;
+  max-height: 320px;
   overflow-y: auto;
 }
 
@@ -101,9 +53,9 @@
   display: grid;
   grid-template-columns: 30px 1fr 50px;
   gap: 15px;
-  padding: 10px;
+  padding: 12px 10px;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 8px;
   align-items: center;
 }
 
@@ -120,7 +72,7 @@
   padding: 12px 24px;
   background-color: white;
   border: 2px solid #333;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
@@ -133,20 +85,55 @@
 }
 
 .info-text {
+  margin: 0;
   font-size: 12px;
   color: #999;
   text-align: center;
 }
 
 .game-section {
-  background-color: white;
-  border: 2px solid #333;
-  border-radius: 20px;
-  padding: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 280px;
+}
+
+.locked-game {
+  text-align: center;
+  padding: 20px;
+  border: 1px dashed #999;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.portfolio-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.portfolio-section h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.portfolio-section p {
+  margin: 0;
+  color: #666;
+  line-height: 1.6;
+}
+
+.portfolio-card {
+  background: #f7f7f7;
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid #ddd;
+}
+
+.portfolio-card h3 {
+  margin: 0 0 8px;
 }
 
 @media (max-width: 768px) {

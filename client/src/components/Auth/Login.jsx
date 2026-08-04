@@ -1,13 +1,33 @@
 import { useState } from 'react'
 import './Auth.css'
+import api from '../../utils/api'
+import { useAuth } from '../../contexts/AuthContext'
 
-export default function Login() {
+export default function Login({ setCurrentPage }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const { login } = useAuth()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // TODO: Login logic
+    setError('')
+    setLoading(true)
+
+    try {
+      const response = await api.post('/auth/login', {
+        username,
+        password,
+      })
+
+      login(response.data.user, response.data.token)
+      setCurrentPage('home')
+    } catch (err) {
+      setError(err.response?.data?.message || 'Login failed')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -15,7 +35,7 @@ export default function Login() {
       <h2>Login</h2>
       <form onSubmit={handleSubmit} className="auth-form">
         <input
-          type="username"
+          type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -28,7 +48,12 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Login</button>
+
+        {error && <p className="error-message">{error}</p>}
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
       </form>
     </div>
   )

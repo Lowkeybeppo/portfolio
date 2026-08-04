@@ -7,7 +7,7 @@ import './App.css';
 import { useAuth } from './contexts/AuthContext';
 
 function App() {
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth();
   const [currentPage, setCurrentPage] = useState('home');
 
   const handleLogout = () => {
@@ -15,34 +15,30 @@ function App() {
     setCurrentPage('home');
   };
 
-  if (!user && currentPage === 'home') {
-    return (
-      <div className="app">
-        <header className="header">
-          <div className="logo">LOGO?</div>
-          <nav className="nav-buttons">
-            <button onClick={() => setCurrentPage('login')}>Kirjaudu</button>
-            <button onClick={() => setCurrentPage('register')}>Rekisteröidy</button>
-          </nav>
-        </header>
-        {currentPage === 'login' && <Login setCurrentPage={setCurrentPage} />}
-        {currentPage === 'register' && <Register setCurrentPage={setCurrentPage} />}
-      </div>
-    );
+  if (loading) {
+    return <div className="app">Loading...</div>;
   }
+
+  const renderGuestNav = (
+    <header className="header">
+      <div className="logo">LOGO?</div>
+      <nav className="nav-buttons">
+        <button onClick={() => setCurrentPage('login')}>Kirjaudu</button>
+        <button onClick={() => setCurrentPage('register')}>Rekisteröidy</button>
+      </nav>
+    </header>
+  );
 
   if (!user) {
     return (
       <div className="app">
-        <header className="header">
-          <div className="logo">LOGO?</div>
-          <nav className="nav-buttons">
-            <button onClick={() => setCurrentPage('login')}>Kirjaudu</button>
-            <button onClick={() => setCurrentPage('register')}>Rekisteröidy</button>
-          </nav>
-        </header>
-        {currentPage === 'login' && <Login setCurrentPage={setCurrentPage} />}
-        {currentPage === 'register' && <Register setCurrentPage={setCurrentPage} />}
+        {renderGuestNav}
+
+        <main className="main-content">
+          {currentPage === 'login' && <Login setCurrentPage={setCurrentPage} />}
+          {currentPage === 'register' && <Register setCurrentPage={setCurrentPage} />}
+          {currentPage === 'home' && <Home />}
+        </main>
       </div>
     );
   }
@@ -52,7 +48,7 @@ function App() {
       <header className="header">
         <div className="logo">LOGO?</div>
         <nav className="nav-buttons">
-          <button onClick={() => setCurrentPage('home')}>Pääivän sana</button>
+          <button onClick={() => setCurrentPage('home')}>Päivän sana</button>
           <button onClick={() => setCurrentPage('profile')}>{user.username}</button>
           <button onClick={handleLogout}>Kirjaudu ulos</button>
         </nav>

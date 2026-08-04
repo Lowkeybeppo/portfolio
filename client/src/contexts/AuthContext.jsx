@@ -7,13 +7,27 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Check if user is already logged in
+  const restoreSession = async () => {
     const token = localStorage.getItem('token')
-    if (token) {
-      // TODO: Verify token and get user info
+
+    if (!token) {
+      setLoading(false)
+      return
     }
-    setLoading(false)
-  }, [])
+
+    try {
+      const response = await api.get('/auth/me')
+      setUser(response.data)
+    } catch {
+      localStorage.removeItem('token')
+      setUser(null)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  restoreSession()
+}, [])
 
   const login = (userData, token) => {
     localStorage.setItem('token', token)

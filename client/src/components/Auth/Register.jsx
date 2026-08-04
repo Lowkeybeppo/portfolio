@@ -1,15 +1,40 @@
 import { useState } from 'react'
 import './Auth.css'
+import api from '../../utils/api'
+import { useAuth } from '../../contexts/AuthContext'
 
-export default function Register() {
+export default function Register({ setCurrentPage }) {
   const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const { register } = useAuth()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // TODO: Register logic
+    setError('')
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const response = await api.post('/auth/register', {
+        username,
+        password,
+      })
+
+      register(response.data.user, response.data.token)
+      setCurrentPage('home')
+    } catch (err) {
+      setError(err.response?.data?.message || 'Registration failed')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -31,6 +56,7 @@ export default function Register() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
         <input
           type="password"
           placeholder="Confirm Password"
@@ -38,7 +64,12 @@ export default function Register() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
-        <button type="submit">Register</button>
+
+        {error && <p className="error-message">{error}</p>}
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Registering...' : 'Register'}
+        </button>
       </form>
     </div>
   )
