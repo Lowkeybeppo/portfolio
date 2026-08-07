@@ -1,14 +1,149 @@
+.wordle-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.back-button {
+  align-self: flex-start;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
 .wordle-container {
-  max-width: 400px;
-  margin: 0 auto;
+  max-width: 460px;
+  width: 100%;
   padding: 20px;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
 .wordle-container h3 {
-  margin-bottom: 20px;
+  margin: 0 0 8px;
   color: #282c34;
+}
+
+.wordle-status {
+  margin: 0 0 16px;
+  color: #666;
+  font-size: 14px;
+}
+
+.wordle-grid {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.wordle-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.wordle-tile {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 1px solid #d3d6da;
+  background: #fff;
+  border-radius: 6px;
+}
+
+.wordle-tile.correct {
+  background: #6aaa64;
+  color: white;
+  border-color: #6aaa64;
+}
+
+.wordle-tile.present {
+  background: #c9b458;
+  color: white;
+  border-color: #c9b458;
+}
+
+.wordle-tile.absent {
+  background: #787c7e;
+  color: white;
+  border-color: #787c7e;
+}
+
+.wordle-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.wordle-form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  text-transform: lowercase;
+}
+
+.wordle-form button,
+.keyboard-key {
+  padding: 10px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #333;
+  color: white;
+  cursor: pointer;
+}
+
+.wordle-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.keyboard {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.keyboard-key {
+  min-width: 36px;
+  background: #f1f1f1;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.keyboard-key.correct {
+  background: #6aaa64;
+  color: white;
+  border-color: #6aaa64;
+}
+
+.keyboard-key.present {
+  background: #c9b458;
+  color: white;
+  border-color: #c9b458;
+}
+
+.keyboard-key.absent {
+  background: #787c7e;
+  color: white;
+  border-color: #787c7e;
+}
+
+.keyboard-key.wide {
+  min-width: 72px;
 }

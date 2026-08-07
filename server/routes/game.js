@@ -4,6 +4,18 @@ import GameScore from '../models/GameScore.js';
 
 const router = express.Router();
 
+const DAILY_WORDS = ['react', 'apple', 'plant', 'grape', 'beach', 'crane', 'smile', 'light', 'storm', 'brave']
+
+router.get('/word', (req, res) => {
+  const today = new Date().toISOString().slice(0, 10)
+  const seed = Array.from(today).reduce((sum, char) => sum + char.charCodeAt(0), 0)
+
+  res.json({
+    word: DAILY_WORDS[seed % DAILY_WORDS.length],
+    date: today,
+  })
+})
+
 router.post('/submit', auth, async (req, res) => {
   try {
     const { word, attempts, time } = req.body;

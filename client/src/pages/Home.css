@@ -1,7 +1,7 @@
 .home-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
   width: 100%;
   align-items: start;
 }
@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  min-width: 0;
 }
 
 .leaderboard-section,
@@ -19,19 +20,21 @@
   background-color: white;
   border: 2px solid #333;
   border-radius: 20px;
-  padding: 32px;
+  padding: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .leaderboard-section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
-.leaderboard-section h2 {
+.leaderboard-section h2,
+.portfolio-section h2,
+.game-cta h3 {
   margin: 0;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
 }
 
@@ -44,16 +47,16 @@
 .leaderboard-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-height: 320px;
+  gap: 10px;
+  max-height: 300px;
   overflow-y: auto;
 }
 
 .leaderboard-item {
   display: grid;
   grid-template-columns: 30px 1fr 50px;
-  gap: 15px;
-  padding: 12px 10px;
+  gap: 12px;
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
   align-items: center;
@@ -68,35 +71,27 @@
   font-weight: bold;
 }
 
-.btn-primary {
-  padding: 12px 24px;
-  background-color: white;
-  border: 2px solid #333;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  background-color: #333;
-  color: white;
-}
-
-.info-text {
-  margin: 0;
-  font-size: 12px;
-  color: #999;
-  text-align: center;
-}
-
 .game-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 280px;
+  gap: 16px;
+}
+
+.game-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.game-cta p {
+  margin: 0;
+  color: #666;
+}
+
+.game-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .locked-game {
@@ -110,13 +105,7 @@
 .portfolio-section {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-}
-
-.portfolio-section h2 {
-  margin: 0;
-  font-size: 28px;
-  font-weight: bold;
+  gap: 16px;
 }
 
 .portfolio-section p {
@@ -128,7 +117,7 @@
 .portfolio-card {
   background: #f7f7f7;
   border-radius: 12px;
-  padding: 18px;
+  padding: 16px;
   border: 1px solid #ddd;
 }
 
@@ -136,12 +125,37 @@
   margin: 0 0 8px;
 }
 
-@media (max-width: 768px) {
+.btn-primary {
+  padding: 12px 20px;
+  background-color: white;
+  border: 2px solid #333;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+}
+
+.btn-primary:hover {
+  background-color: #333;
+  color: white;
+}
+
+@media (max-width: 900px) {
   .home-container {
     grid-template-columns: 1fr;
   }
+}
 
-  .leaderboard-list {
-    max-height: none;
+@media (max-width: 600px) {
+  .leaderboard-section,
+  .game-section,
+  .portfolio-section {
+    padding: 18px;
+  }
+
+  .leaderboard-item {
+    grid-template-columns: 24px 1fr 40px;
   }
 }

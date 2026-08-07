@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import Wordle from '../components/Game/Wordle';
 import './Home.css';
 import api from '../utils/api';
 import { useAuth } from '../contexts/AuthContext';
 
-export default function Home() {
+export default function Home({ setCurrentPage }) {
   const [leaderboard, setLeaderboard] = useState([]);
   const { user } = useAuth();
 
@@ -19,6 +18,15 @@ export default function Home() {
     } catch (error) {
       console.error('Failed to fetch leaderboard:', error);
     }
+  };
+
+  const handlePlayClick = () => {
+    if (!user) {
+      setCurrentPage('login');
+      return;
+    }
+
+    setCurrentPage('game');
   };
 
   return (
@@ -41,25 +49,6 @@ export default function Home() {
               <p>No scores yet</p>
             )}
           </div>
-
-          <button className="btn-primary">
-            {user ? 'Pelaa peliä' : 'Kirjaudu'}
-          </button>
-
-          <p className="info-text">
-            CTA rekisteröitymään "Päivän sana" pelin joka on wordle mutta suomalaisilla sanoilla
-          </p>
-        </div>
-
-        <div className="game-section">
-          {user ? (
-            <Wordle />
-          ) : (
-            <div className="locked-game">
-              <h3>Play the game</h3>
-              <p>Please log in or register to unlock the daily word game.</p>
-            </div>
-          )}
         </div>
       </section>
 
@@ -80,6 +69,14 @@ export default function Home() {
             <h3>Featured Work</h3>
             <p>Show your strongest projects, demo links, or GitHub here.</p>
           </div>
+        </div>
+
+        <div className="game-launch-card">
+          <h3>Daily Wordle</h3>
+          <p>Play the daily word game and challenge the leaderboard.</p>
+          <button onClick={handlePlayClick} className="btn-primary">
+            {user ? 'Open game' : 'Log in to play'}
+          </button>
         </div>
       </section>
     </div>

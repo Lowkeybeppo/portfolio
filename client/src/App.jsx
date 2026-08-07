@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Home from './pages/Home';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
+import Wordle from './components/Game/Wordle';
 import './App.css';
 import { useAuth } from './contexts/AuthContext';
 
@@ -37,7 +38,8 @@ function App() {
         <main className="main-content">
           {currentPage === 'login' && <Login setCurrentPage={setCurrentPage} />}
           {currentPage === 'register' && <Register setCurrentPage={setCurrentPage} />}
-          {currentPage === 'home' && <Home />}
+          {currentPage === 'home' && <Home setCurrentPage={setCurrentPage} />}
+          {currentPage === 'game' && <Wordle setCurrentPage={setCurrentPage} />}
         </main>
       </div>
     );
@@ -55,7 +57,8 @@ function App() {
       </header>
 
       <main className="main-content">
-        {currentPage === 'home' && <Home />}
+        {currentPage === 'home' && <Home setCurrentPage={setCurrentPage} />}
+        {currentPage === 'game' && <Wordle setCurrentPage={setCurrentPage} />}
         {currentPage === 'profile' && <div className="profile-page">Profile page coming soon</div>}
       </main>
     </div>
