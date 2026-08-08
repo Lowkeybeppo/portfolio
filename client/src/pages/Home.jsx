@@ -33,6 +33,14 @@ export default function Home({ setCurrentPage }) {
     <div className="home-container">
       <section className="home-left">
         <div className="leaderboard-section">
+          <div className="game-launch-card">
+            <h1>Päivän sana</h1>
+            <p>Kirjaudu sisään pelataksesi!</p><br />
+            <button onClick={handlePlayClick} className="btn-primary">
+              {user ? 'Pelaa' : 'Kirjaudu sisään'}
+            </button>
+          </div>
+
           <h2>Leaderboard</h2>
           <p>Päivän sana pelin leaderboard</p>
 
@@ -54,10 +62,13 @@ export default function Home({ setCurrentPage }) {
 
       <section className="home-right">
         <div className="portfolio-section">
-          <h2>About the owner</h2>
+          <h1>Minusta</h1>
+          <img src="/ICT_0825.jpg" alt="Profile" className="profile-image" />
           <p>
-            This is your portfolio-style landing section. Add a short profile, project summary,
-            technical skills, and a link to your work here.
+            Olen aloitteleva ohjelmistokehittäjä, joka on erikoistunut web-kehitykseen. 
+            Minulla on kokemusta Reactista, Node.js:stä ja MongoDB:stä. Tavoitteeni on luoda käyttäjäystävällisiä ja 
+            tehokkaita web-sovelluksia. Olen kiinnostunut uusista teknologioista ja jatkuvasti kehittämässä taitojani 
+            ohjelmistokehityksen alalla.
           </p>
 
           <div className="portfolio-card">
@@ -71,13 +82,7 @@ export default function Home({ setCurrentPage }) {
           </div>
         </div>
 
-        <div className="game-launch-card">
-          <h3>Daily Wordle</h3>
-          <p>Play the daily word game and challenge the leaderboard.</p>
-          <button onClick={handlePlayClick} className="btn-primary">
-            {user ? 'Open game' : 'Log in to play'}
-          </button>
-        </div>
+
       </section>
     </div>
   );
