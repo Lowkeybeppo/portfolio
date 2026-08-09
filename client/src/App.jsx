@@ -59,7 +59,7 @@ function App() {
       <main className="main-content">
         {currentPage === 'home' && <Home setCurrentPage={setCurrentPage} />}
         {currentPage === 'game' && <Wordle setCurrentPage={setCurrentPage} />}
-        {currentPage === 'profile' && <div className="profile-page">Profile page coming soon</div>}
+        {currentPage === 'profile' && <div className="profile-page">Profiilisivu tulossa...</div>}
       </main>
     </div>
   );

@@ -72,13 +72,13 @@ export default function Home({ setCurrentPage }) {
           </p>
 
           <div className="portfolio-card">
-            <h3>Portfolio Snapshot</h3>
-            <p>Frontend developer • React • Node.js • MongoDB</p>
+            <h3>CV/Sertifikaatit</h3>
+            <p>Vitusti cv:tä ja sertejä</p>
           </div>
 
           <div className="portfolio-card">
-            <h3>Featured Work</h3>
-            <p>Show your strongest projects, demo links, or GitHub here.</p>
+            <h3>Referenssit</h3>
+            <p>Vitusti referenssejä yooooo!</p>
           </div>
         </div>
 
