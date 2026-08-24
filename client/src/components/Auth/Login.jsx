@@ -3,7 +3,7 @@ import './Auth.css'
 import api from '../../utils/api'
 import { useAuth } from '../../contexts/AuthContext'
 
-export default function Login({ setCurrentPage }) {
+export default function Login({ setCurrentPage, onClose }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -22,6 +22,7 @@ export default function Login({ setCurrentPage }) {
       })
 
       login(response.data.user, response.data.token)
+      onClose?.()
       setCurrentPage('home')
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed')
@@ -32,18 +33,18 @@ export default function Login({ setCurrentPage }) {
 
   return (
     <div className="auth-container">
-      <h2>Login</h2>
+      <h2>Kirjaudu</h2>
       <form onSubmit={handleSubmit} className="auth-form">
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Käyttäjänimi"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         />
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Salasana"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -52,7 +53,7 @@ export default function Login({ setCurrentPage }) {
         {error && <p className="error-message">{error}</p>}
 
         <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
+          {loading ? 'Kirjataan sisään...' : 'Kirjaudu'}
         </button>
       </form>
     </div>

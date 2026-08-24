@@ -3,7 +3,7 @@ import './Home.css';
 import api from '../utils/api';
 import { useAuth } from '../contexts/AuthContext';
 
-export default function Home({ setCurrentPage }) {
+export default function Home({ setCurrentPage, openAuthModal }) {
   const [leaderboard, setLeaderboard] = useState([]);
   const { user } = useAuth();
 
@@ -22,7 +22,7 @@ export default function Home({ setCurrentPage }) {
 
   const handlePlayClick = () => {
     if (!user) {
-      setCurrentPage('login');
+      openAuthModal('login');
       return;
     }
 

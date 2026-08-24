@@ -3,7 +3,7 @@ import './Auth.css'
 import api from '../../utils/api'
 import { useAuth } from '../../contexts/AuthContext'
 
-export default function Register({ setCurrentPage }) {
+export default function Register({ setCurrentPage, onClose }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -29,6 +29,7 @@ export default function Register({ setCurrentPage }) {
       })
 
       register(response.data.user, response.data.token)
+      onClose?.()
       setCurrentPage('home')
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed')
@@ -39,11 +40,11 @@ export default function Register({ setCurrentPage }) {
 
   return (
     <div className="auth-container">
-      <h2>Register</h2>
+      <h2>Rekisteröidy</h2>
       <form onSubmit={handleSubmit} className="auth-form">
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Käyttäjänimi"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -51,7 +52,7 @@ export default function Register({ setCurrentPage }) {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Salasana"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -59,7 +60,7 @@ export default function Register({ setCurrentPage }) {
 
         <input
           type="password"
-          placeholder="Confirm Password"
+          placeholder="Vahvista Salasana"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
@@ -68,7 +69,7 @@ export default function Register({ setCurrentPage }) {
         {error && <p className="error-message">{error}</p>}
 
         <button type="submit" disabled={loading}>
-          {loading ? 'Registering...' : 'Register'}
+          {loading ? 'Rekisteröidään...' : 'Rekisteröidy'}
         </button>
       </form>
     </div>

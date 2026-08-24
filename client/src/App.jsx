@@ -1,34 +1,39 @@
 //import { BrowserRouter as Router, Routes, Route, useState, useContext } from 'react-router-dom';
-import { useState } from 'react';
-import Home from './pages/Home';
-import Login from './components/Auth/Login';
-import Register from './components/Auth/Register';
-import Wordle from './components/Game/Wordle';
-import './App.css';
-import { useAuth } from './contexts/AuthContext';
+import { useState } from 'react'
+import Modal from 'react-modal'
+import Home from './pages/Home'
+import Login from './components/Auth/Login'
+import Register from './components/Auth/Register'
+import Wordle from './components/Game/Wordle'
+import './App.css'
+import { useAuth } from './contexts/AuthContext'
 
 function App() {
-  const { user, logout, loading } = useAuth();
-  const [currentPage, setCurrentPage] = useState('home');
+  const { user, logout, loading } = useAuth()
+  const [currentPage, setCurrentPage] = useState('home')
+  const [authModal, setAuthModal] = useState(null) // 'login' | 'register' | null
+
+  const openAuthModal = (type) => setAuthModal(type)
+  const closeAuthModal = () => setAuthModal(null)
 
   const handleLogout = () => {
-    logout();
-    setCurrentPage('home');
-  };
+    logout()
+    setCurrentPage('home')
+  }
 
   if (loading) {
-    return <div className="app">Loading...</div>;
+    return <div className="app">Loading...</div>
   }
 
   const renderGuestNav = (
     <header className="header">
       <div className="logo">LOGO?</div>
       <nav className="nav-buttons">
-        <button onClick={() => setCurrentPage('login')}>Kirjaudu</button>
-        <button onClick={() => setCurrentPage('register')}>Rekisteröidy</button>
+        <button onClick={() => setAuthModal('login')}>Kirjaudu</button>
+        <button onClick={() => setAuthModal('register')}>Rekisteröidy</button>
       </nav>
     </header>
-  );
+  )
 
   if (!user) {
     return (
@@ -36,13 +41,25 @@ function App() {
         {renderGuestNav}
 
         <main className="main-content">
-          {currentPage === 'login' && <Login setCurrentPage={setCurrentPage} />}
-          {currentPage === 'register' && <Register setCurrentPage={setCurrentPage} />}
-          {currentPage === 'home' && <Home setCurrentPage={setCurrentPage} />}
+          {currentPage === 'home' && <Home setCurrentPage={setCurrentPage} openAuthModal={setAuthModal} />}
           {currentPage === 'game' && <Wordle setCurrentPage={setCurrentPage} />}
         </main>
+
+        <Modal
+          isOpen={Boolean(authModal)}
+          onRequestClose={closeAuthModal}
+          contentLabel={authModal === 'login' ? 'Login' : 'Register'}
+          overlayClassName="modal-overlay"
+          className="modal-content"
+        >
+          {authModal === 'login' ? (
+            <Login setCurrentPage={setCurrentPage} onClose={closeAuthModal} />
+          ) : (
+            <Register setCurrentPage={setCurrentPage} onClose={closeAuthModal} />
+          )}
+        </Modal>
       </div>
-    );
+    )
   }
 
   return (
@@ -62,7 +79,7 @@ function App() {
         {currentPage === 'profile' && <div className="profile-page">Profiilisivu tulossa...</div>}
       </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
