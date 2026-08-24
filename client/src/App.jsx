@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
 import Wordle from './components/Game/Wordle'
+import AdminPanel from './components/Admin/AdminPanel'
 import './App.css'
 import { useAuth } from './contexts/AuthContext'
 
@@ -69,6 +70,9 @@ function App() {
         <nav className="nav-buttons">
           <button onClick={() => setCurrentPage('home')}>Päivän sana</button>
           <button onClick={() => setCurrentPage('profile')}>{user.username}</button>
+          {user.isAdmin && (
+            <button onClick={() => setCurrentPage('admin')}>Admin</button>
+          )}
           <button onClick={handleLogout}>Kirjaudu ulos</button>
         </nav>
       </header>
@@ -77,6 +81,7 @@ function App() {
         {currentPage === 'home' && <Home setCurrentPage={setCurrentPage} />}
         {currentPage === 'game' && <Wordle setCurrentPage={setCurrentPage} />}
         {currentPage === 'profile' && <div className="profile-page">Profiilisivu tulossa...</div>}
+        {currentPage === 'admin' && <AdminPanel />}
       </main>
     </div>
   )
