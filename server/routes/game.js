@@ -1,20 +1,63 @@
 import express from 'express';
 import { auth } from '../middleware/auth.js';
 import GameScore from '../models/GameScore.js';
+import Word from '../models/Word.js';
+import DailyWord from '../models/DailyWord.js';
 
 const router = express.Router();
 
-const DAILY_WORDS = ['react', 'apple', 'plant', 'grape', 'beach', 'crane', 'smile', 'light', 'storm', 'brave']
+router.get('/word', async (req, res) => {
+  try {
+    const date = new Date().toISOString().slice(0, 10);
 
-router.get('/word', (req, res) => {
-  const today = new Date().toISOString().slice(0, 10)
-  const seed = Array.from(today).reduce((sum, char) => sum + char.charCodeAt(0), 0)
+    const existingAssignment = await DailyWord.findOne({ date }).lean();
 
-  res.json({
-    word: DAILY_WORDS[seed % DAILY_WORDS.length],
-    date: today,
-  })
-})
+    if (existingAssignment) {
+      return res.json({
+        word: existingAssignment.word,
+        date,
+      });
+    }
+
+    const [randomWord] = await Word.aggregate([
+      { $match: { active: true } },
+      { $sample: { size: 1 } },
+    ]);
+
+    if (!randomWord) {
+      return res.status(500).json({
+        message: 'No active words are available',
+      });
+    }
+
+    try {
+      const assignment = await DailyWord.create({
+        date,
+        word: randomWord.value,
+      });
+
+      return res.json({
+        word: assignment.word,
+        date: assignment.date,
+      });
+    } catch (error) {
+      // Another request may have created today's word first.
+      if (error.code === 11000) {
+        const assignment = await DailyWord.findOne({ date }).lean();
+
+        return res.json({
+          word: assignment.word,
+          date: assignment.date,
+        });
+      }
+
+      throw error;
+    }
+  } catch (error) {
+    console.error('Failed to get daily word:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 router.post('/submit', auth, async (req, res) => {
   try {

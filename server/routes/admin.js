@@ -2,6 +2,7 @@ import express from 'express';
 import { auth, isAdmin } from '../middleware/auth.js';
 import User from '../models/User.js';
 import GameScore from '../models/GameScore.js';
+import Word from '../models/Word.js';
 
 const router = express.Router();
 
@@ -108,6 +109,68 @@ router.get('/stats', async (req, res) => {
     });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.get('/words', async (req, res) => {
+  try {
+    const words = await Word.find().sort({ value: 1 });
+    res.json(words);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.post('/words', async (req, res) => {
+  try {
+    const value = req.body.value?.trim().toLowerCase();
+
+    if (!/^[a-z]{5}$/.test(value || '')) {
+      return res.status(400).json({
+        message: 'Word must contain exactly 5 letters',
+      });
+    }
+
+    const word = await Word.create({ value });
+    res.status(201).json(word);
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(409).json({ message: 'Word already exists' });
+    }
+
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.patch('/words/:id', async (req, res) => {
+  try {
+    const word = await Word.findByIdAndUpdate(
+      req.params.id,
+      { active: Boolean(req.body.active) },
+      { new: true, runValidators: true }
+    );
+
+    if (!word) {
+      return res.status(404).json({ message: 'Word not found' });
+    }
+
+    res.json(word);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.delete('/words/:id', async (req, res) => {
+  try {
+    const word = await Word.findByIdAndDelete(req.params.id);
+
+    if (!word) {
+      return res.status(404).json({ message: 'Word not found' });
+    }
+
+    res.json({ message: 'Word deleted' });
+  } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
 });

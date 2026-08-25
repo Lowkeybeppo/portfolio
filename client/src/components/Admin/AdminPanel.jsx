@@ -8,20 +8,24 @@ export default function AdminPanel() {
   const [scores, setScores] = useState([])
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [words, setWords] = useState([])
+  const [newWord, setNewWord] = useState('')
 
   const fetchAdminData = async () => {
     try {
       setLoading(true)
 
-      const [usersRes, scoresRes, statsRes] = await Promise.all([
+      const [usersRes, scoresRes, statsRes, wordsRes] = await Promise.all([
         api.get('/admin/users'),
         api.get('/admin/game-scores'),
         api.get('/admin/stats'),
+        api.get('/admin/words'),
       ])
 
       setUsers(usersRes.data)
       setScores(scoresRes.data)
       setStats(statsRes.data)
+      setWords(wordsRes.data)
     } catch (error) {
       console.error('Failed to load admin data:', error)
     } finally {
@@ -62,48 +66,87 @@ export default function AdminPanel() {
     }
   }
 
+  const handleAddWord = async (event) => {
+  event.preventDefault();
+
+  try {
+    await api.post('/admin/words', { value: newWord });
+    setNewWord('');
+    fetchAdminData();
+  } catch (error) {
+    console.error('Failed to add word:', error);
+  }
+};
+
+const handleToggleWord = async (word) => {
+  try {
+    await api.patch(`/admin/words/${word._id}`, {
+      active: !word.active,
+    });
+    fetchAdminData();
+  } catch (error) {
+    console.error('Failed to update word:', error);
+  }
+};
+
+const handleDeleteWord = async (id) => {
+  try {
+    await api.delete(`/admin/words/${id}`);
+    fetchAdminData();
+  } catch (error) {
+    console.error('Failed to delete word:', error);
+  }
+};
+
   if (loading) {
     return <div className="admin-container"><h2>Admin Panel</h2><p>Loading...</p></div>
   }
 
   return (
     <div className="admin-container">
-      <h2>Admin Panel</h2>
+      <h2>Admin Paneeli</h2>
 
       <div className="admin-tabs">
         <button
           className={activeTab === 'users' ? 'active' : ''}
           onClick={() => setActiveTab('users')}
         >
-          Manage Users
+          Hallitse käyttäjiä
         </button>
 
         <button
           className={activeTab === 'scores' ? 'active' : ''}
           onClick={() => setActiveTab('scores')}
         >
-          Game Scores
+          Pelatut pelit
         </button>
 
         <button
           className={activeTab === 'stats' ? 'active' : ''}
           onClick={() => setActiveTab('stats')}
         >
-          System Stats
+          Statistiikat
+        </button>
+
+        <button
+          className={activeTab === 'words' ? 'active' : ''}
+          onClick={() => setActiveTab('words')}
+        >
+          Hallitse sanoja
         </button>
       </div>
 
       <div className="admin-content">
         {activeTab === 'users' && (
           <div className="tab-content">
-            <h3>Manage Users</h3>
+            <h3>Hallitse käyttäjiä</h3>
 
             <table>
               <thead>
                 <tr>
-                  <th>Username</th>
+                  <th>Käyttäjänimi</th>
                   <th>Admin</th>
-                  <th>Actions</th>
+                  <th>Toiminnot</th>
                 </tr>
               </thead>
 
@@ -111,13 +154,13 @@ export default function AdminPanel() {
                 {users.map((user) => (
                   <tr key={user._id}>
                     <td>{user.username}</td>
-                    <td>{user.isAdmin ? 'Yes' : 'No'}</td>
+                    <td>{user.isAdmin ? 'Kyllä' : 'Ei'}</td>
                     <td>
                       <button onClick={() => handleToggleAdmin(user._id, user.isAdmin)}>
-                        {user.isAdmin ? 'Remove Admin' : 'Make Admin'}
+                        {user.isAdmin ? 'Poista Admin' : 'Tee Admin'}
                       </button>
                       <button onClick={() => handleDeleteUser(user._id)}>
-                        Delete
+                        Poista
                       </button>
                     </td>
                   </tr>
@@ -129,16 +172,16 @@ export default function AdminPanel() {
 
         {activeTab === 'scores' && (
           <div className="tab-content">
-            <h3>Game Scores</h3>
+            <h3>Pelatut pelit</h3>
 
             <table>
               <thead>
                 <tr>
-                  <th>User</th>
-                  <th>Word</th>
-                  <th>Attempts</th>
-                  <th>Time</th>
-                  <th>Action</th>
+                  <th>Käyttäjä</th>
+                  <th>Sana</th>
+                  <th>Yritykset</th>
+                  <th>Aika</th>
+                  <th>Toiminnot</th>
                 </tr>
               </thead>
 
@@ -151,7 +194,7 @@ export default function AdminPanel() {
                     <td>{score.time}s</td>
                     <td>
                       <button onClick={() => handleDeleteScore(score._id)}>
-                        Delete
+                        Poista
                       </button>
                     </td>
                   </tr>
@@ -163,20 +206,62 @@ export default function AdminPanel() {
 
         {activeTab === 'stats' && (
           <div className="tab-content">
-            <h3>System Statistics</h3>
+            <h3>Statistiikat</h3>
 
             {stats && (
               <div className="stats-grid">
-                <div>Total users: {stats.totalUsers}</div>
-                <div>Total scores: {stats.totalScores}</div>
+                <div>Rekisteröidyt käyttäjät: {stats.totalUsers}</div>
+                <div>Pelatut pelit: {stats.totalScores}</div>
                 <div>
-                  Best score:{' '}
+                  Paras tulos:{' '}
                   {stats.bestScore
-                    ? `${stats.bestScore.attempts} attempts`
-                    : 'None'}
+                    ? `${stats.bestScore.attempts} arvaus`
+                    : 'Ei tuloksia'}
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {activeTab === 'words' && (
+          <div className="tab-content">
+            <h3>Sana-tietokanta</h3>
+
+            <form onSubmit={handleAddWord}>
+              <input
+                value={newWord}
+                onChange={(event) => setNewWord(event.target.value)}
+                maxLength={5}
+                placeholder="Lisää 5-kirjaiminen sana"
+              />
+              <button type="submit">Lisää sana</button>
+            </form>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Sana</th>
+                  <th>Aktiivinen</th>
+                  <th>Toiminnot</th>
+                </tr>
+              </thead>
+              <tbody>
+                {words.map((word) => (
+                  <tr key={word._id}>
+                    <td>{word.value}</td>
+                    <td>{word.active ? 'Kyllä' : 'Ei'}</td>
+                    <td>
+                      <button onClick={() => handleToggleWord(word)}>
+                        {word.active ? 'Käytössä' : 'Ei käytössä'}
+                      </button>
+                      <button onClick={() => handleDeleteWord(word._id)}>
+                        Poista
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
