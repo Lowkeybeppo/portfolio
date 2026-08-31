@@ -28,7 +28,7 @@ function App() {
 
   const renderGuestNav = (
     <header className="header">
-      <div className="logo">LOGO?</div>
+      <div className="logo"><img src="logo.png" alt="Logo" /></div>
       <nav className="nav-buttons">
         <button onClick={() => setAuthModal('login')}>Kirjaudu</button>
         <button onClick={() => setAuthModal('register')}>Rekisteröidy</button>
@@ -66,7 +66,7 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <div className="logo">LOGO?</div>
+        <div className="logo"><img src="logo.png" alt="Logo" /></div>
         <nav className="nav-buttons">
           <button onClick={() => setCurrentPage('home')}>Päivän sana</button>
           <button onClick={() => setCurrentPage('profile')}>{user.username}</button>

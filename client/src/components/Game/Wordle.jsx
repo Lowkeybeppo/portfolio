@@ -43,7 +43,7 @@ export default function Wordle({ setCurrentPage }) {
   const [guesses, setGuesses] = useState([]);
   const [results, setResults] = useState([]);
   const [gameOver, setGameOver] = useState(false);
-  const [message, setMessage] = useState('Enter a 5-letter word');
+  const [message, setMessage] = useState('Arvaa 5 kirjaiminen sana');
   const [loadingWord, setLoadingWord] = useState(true);
   const [keyStatuses, setKeyStatuses] = useState({});
   const { submitGame, loading: submitting } = useGame();
@@ -126,19 +126,19 @@ export default function Wordle({ setCurrentPage }) {
 
     if (guess === targetWord) {
       setGameOver(true);
-      setMessage('You solved it!');
+      setMessage('Arvasit sanan oikein! Onneksi olkoon!');
       await saveResult(nextGuesses.length);
       return;
     }
 
     if (nextGuesses.length >= MAX_ATTEMPTS) {
       setGameOver(true);
-      setMessage(`Game over. The word was ${targetWord.toUpperCase()}`);
+      setMessage(`Peli päättyi. Sana oli ${targetWord.toUpperCase()}`);
       await saveResult(nextGuesses.length);
       return;
     }
 
-    setMessage('Try another guess');
+    setMessage('Yritä toista arvausta');
   };
 
   const rows = Array.from({ length: MAX_ATTEMPTS }, (_, index) => {
@@ -157,11 +157,11 @@ export default function Wordle({ setCurrentPage }) {
   return (
     <div className="wordle-page">
       <button className="back-button" onClick={() => setCurrentPage('home')}>
-        ← Back to home
+        ← Takaisin etusivulle
       </button>
 
       <div className="wordle-container">
-        <h3>Daily Wordle</h3>
+        <h3>Päivän Sana</h3>
         <p className="wordle-status">{message}</p>
 
         <div className="wordle-grid">
@@ -191,10 +191,10 @@ export default function Wordle({ setCurrentPage }) {
             placeholder="Type a word"
           />
           <button type="submit" disabled={gameOver || loadingWord || submitting}>
-            {submitting ? 'Saving...' : 'Guess'}
+            {submitting ? 'Saving...' : 'Arvaa'}
           </button>
           <button type="button" onClick={handleBackspace} disabled={gameOver || loadingWord || submitting}>
-            Delete
+            Poista
           </button>
         </form>
 
@@ -219,10 +219,10 @@ export default function Wordle({ setCurrentPage }) {
 
           <div className="keyboard-row">
             <button type="button" className="keyboard-key wide" onClick={() => handleGuess()}>
-              Enter
+              Arvaa
             </button>
             <button type="button" className="keyboard-key wide" onClick={handleBackspace}>
-              Delete
+              Poista
             </button>
           </div>
         </div>

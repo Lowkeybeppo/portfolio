@@ -30,6 +30,10 @@ body {
   font-weight: bold;
 }
 
+.logo img {
+  height: 80px;
+}
+
 .nav-buttons {
   display: flex;
   gap: 15px;

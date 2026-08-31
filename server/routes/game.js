@@ -129,7 +129,7 @@ router.get('/leaderboard', async (req, res) => {
     const scores = await GameScore.find()
       .populate('user', 'username')
       .sort({ attempts: 1, time: 1 })
-      .limit(10);
+      .limit(15);
 
     const leaderboard = scores.map((score) => ({
       username: score.user?.username || 'Unknown',

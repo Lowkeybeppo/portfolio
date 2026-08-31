@@ -3,6 +3,28 @@ import './Home.css';
 import api from '../utils/api';
 import { useAuth } from '../contexts/AuthContext';
 
+const projects = [
+  {
+    title: "Päivän Sana",
+    description: "Päivän sana -sovellus, jossa on dynaaminen API ja moderni UI.",
+    image: "/projects/paivansana.png",
+    url: "https://paivansana.fi"
+  },
+  {
+    title: "Kaatajat IG-kampanja",
+    description: "Mainoskampanja, jossa vastasin videotuotannosta ja editoinnista.",
+    image: "/projects/kaatajat.png",
+    url: "https://instagram.com/kaatajatfi"
+  },
+  {
+    title: "Portfolio-sivusto",
+    description: "Oma React/Vite-pohjainen portfolio, jossa on CV, sertifikaatit ja projektiesittelyt.",
+    image: "/projects/portfolio.png",
+    url: ""
+  }
+];
+
+
 export default function Home({ setCurrentPage, openAuthModal }) {
   const [leaderboard, setLeaderboard] = useState([]);
   const { user } = useAuth();
@@ -72,13 +94,68 @@ export default function Home({ setCurrentPage, openAuthModal }) {
           </p>
 
           <div className="portfolio-card">
-            <h3>CV/Sertifikaatit</h3>
-            <p>Vitusti cv:tä ja sertejä</p>
+            <h2>CV/Sertifikaatit</h2>
+            <a href="/CV.pdf" target="_blank" rel="noopener noreferrer" className="cv-link">
+              Avaa CV
+            </a>
+            <a href="https://www.credly.com/badges/18455a3d-0659-4e4f-b835-5a5ae24d1ba6" target="_blank" rel="noopener noreferrer">
+              <img src="/badgehtml.png" alt="HTML/CSS" />
+            </a>
+            <a href="https://www.credly.com/badges/68b59db5-7dad-4e93-b3e2-8ea679c920db" target="_blank" rel="noopener noreferrer">
+              <img src="/badgejs.png" alt="JavaScript" />
+            </a>
           </div>
 
           <div className="portfolio-card">
-            <h3>Referenssit</h3>
-            <p>Vitusti referenssejä yooooo!</p>
+  <h2>Referenssit</h2>
+            <section id="references" style={{ padding: "2rem" }}>
+
+
+  <div style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    gap: "1.5rem",
+    marginTop: "1rem"
+  }}>
+    {projects.map((project, index) => (
+      <a
+        key={index}
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          textDecoration: "none",
+          color: "inherit"
+        }}
+      >
+        <div style={{
+          border: "1px solid #ddd",
+          padding: "1rem",
+          borderRadius: "8px",
+          background: "#fafafa",
+          transition: "0.2s",
+          cursor: "pointer"
+        }}>
+          {project.image && (
+            <img
+              src={project.image}
+              alt={project.title}
+              style={{
+                width: "100%",
+                borderRadius: "6px",
+                marginBottom: "0.75rem"
+              }}
+            />
+          )}
+
+          <h3>{project.title}</h3>
+          <p>{project.description}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
           </div>
         </div>
 
