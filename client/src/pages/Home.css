@@ -184,3 +184,55 @@
     grid-template-columns: 24px 1fr 40px;
   }
 }
+
+/* Dark mode overrides */
+.dark-mode .leaderboard-section,
+.dark-mode .game-section,
+.dark-mode .portfolio-section {
+  background-color: #2d2d2d;
+  border-color: #e0e0e0;
+  color: #e0e0e0;
+}
+
+.dark-mode .leaderboard-section > p,
+.dark-mode .game-cta p,
+.dark-mode .portfolio-section p {
+  color: #b0b0b0;
+}
+
+.dark-mode .leaderboard-item {
+  border-color: #444;
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+}
+
+.dark-mode .portfolio-card {
+  background-color: #1f1f1f;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+.dark-mode .locked-game {
+  border-color: #666;
+  color: #b0b0b0;
+}
+
+.dark-mode .btn-primary {
+  background-color: #2d2d2d;
+  border-color: #e0e0e0;
+  color: #e0e0e0;
+}
+
+.dark-mode .btn-primary:hover {
+  background-color: #e0e0e0;
+  color: #2d2d2d;
+}
+
+.dark-mode .cv-link {
+  background-color: #555;
+  color: #e0e0e0;
+}
+
+.dark-mode .cv-link:hover {
+  background-color: #777;
+}

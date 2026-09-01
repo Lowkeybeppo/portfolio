@@ -98,3 +98,41 @@ body {
   width: 90%;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
+
+/* Dark mode */
+.dark-mode {
+  --bg-primary: #1a1a1a;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --border-color: #444;
+}
+
+.dark-mode body {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.dark-mode .header {
+  background-color: #2d2d2d;
+  border-bottom-color: #444;
+}
+
+.dark-mode .nav-buttons button {
+  background-color: #2d2d2d;
+  border-color: #e0e0e0;
+  color: #e0e0e0;
+}
+
+.dark-mode .nav-buttons button:hover {
+  background-color: #e0e0e0;
+  color: #2d2d2d;
+}
+
+.dark-mode .modal-content {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+}
+
+.dark-mode .modal-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}

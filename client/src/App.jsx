@@ -8,9 +8,16 @@ import Wordle from './components/Game/Wordle'
 import AdminPanel from './components/Admin/AdminPanel'
 import './App.css'
 import { useAuth } from './contexts/AuthContext'
+import { useEffect } from 'react'
 
 function App() {
   const { user, logout, loading } = useAuth()
+  const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') === 'dark')
+
+useEffect(() => {
+  localStorage.setItem('theme', isDark ? 'dark' : 'light')
+  document.documentElement.classList.toggle('dark-mode', isDark)
+}, [isDark])
   const [currentPage, setCurrentPage] = useState('home')
   const [authModal, setAuthModal] = useState(null) // 'login' | 'register' | null
 
@@ -32,6 +39,9 @@ function App() {
       <nav className="nav-buttons">
         <button onClick={() => setAuthModal('login')}>Kirjaudu</button>
         <button onClick={() => setAuthModal('register')}>Rekisteröidy</button>
+        <button onClick={() => setIsDark(!isDark)} className="theme-btn">
+          {isDark ? 'Vaalea tila' : 'Tumma tila'}
+        </button>
       </nav>
     </header>
   )
@@ -68,12 +78,15 @@ function App() {
       <header className="header">
         <div className="logo"><img src="logo.png" alt="Logo" /></div>
         <nav className="nav-buttons">
-          <button onClick={() => setCurrentPage('home')}>Päivän sana</button>
+          <button onClick={() => setCurrentPage('home')}>Etusivu</button>
           <button onClick={() => setCurrentPage('profile')}>{user.username}</button>
           {user.isAdmin && (
             <button onClick={() => setCurrentPage('admin')}>Admin</button>
           )}
           <button onClick={handleLogout}>Kirjaudu ulos</button>
+          <button onClick={() => setIsDark(!isDark)} className="theme-btn">
+            {isDark ? 'Vaalea tila' : 'Tumma tila'}
+          </button>
         </nav>
       </header>
 

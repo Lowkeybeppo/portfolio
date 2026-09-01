@@ -160,6 +160,18 @@ export default function Wordle({ setCurrentPage }) {
         ← Takaisin etusivulle
       </button>
 
+          {gameOver && (
+      <div className={`game-end-modal ${guesses[guesses.length - 1] === targetWord ? 'win' : 'loss'}`}>
+        <div className="game-end-content">
+          <h2>{guesses[guesses.length - 1] === targetWord ? 'VOITIT!' : 'HÄVISIT'}</h2>
+          <p>{message}</p>
+          <button onClick={() => setCurrentPage('home')} className="end-modal-btn">
+            Takaisin etusivulle
+          </button>
+        </div>
+      </div>
+            )}
+
       <div className="wordle-container">
         <h3>Päivän Sana</h3>
         <p className="wordle-status">{message}</p>
