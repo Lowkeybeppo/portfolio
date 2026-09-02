@@ -5,10 +5,10 @@ import { useAuth } from '../contexts/AuthContext';
 
 const projects = [
   {
-    title: "Päivän Sana",
-    description: "Päivän sana -sovellus, jossa on dynaaminen API ja moderni UI.",
-    image: "/projects/paivansana.png",
-    url: "https://paivansana.fi"
+    title: "Kaatajat.fi",
+    description: "Kaatajat.fi on verkkosivusto kaatajat.fi metsuri-yritykselle.",
+    image: "/projects/kaatajat.png",
+    url: "https://kaatajat.fi"
   },
   {
     title: "Kaatajat IG-kampanja",
@@ -21,6 +21,12 @@ const projects = [
     description: "Oma React/Vite-pohjainen portfolio, jossa on CV, sertifikaatit ja projektiesittelyt.",
     image: "/projects/portfolio.png",
     url: ""
+  },
+  {
+    title: "Palkkiolaskuri",
+    description: "Palkkiolaskuri-sovellus, joka laskee palkkion ja verot.",
+    image: "/projects/palkkiolaskuri.png",
+    url: "https://palkkiolaskuri.fi"
   }
 ];
 
@@ -107,54 +113,22 @@ export default function Home({ setCurrentPage, openAuthModal }) {
           </div>
 
           <div className="portfolio-card">
-  <h2>Referenssit</h2>
-            <section id="references" style={{ padding: "2rem" }}>
-
-
-  <div style={{
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "1.5rem",
-    marginTop: "1rem"
-  }}>
-    {projects.map((project, index) => (
-      <a
-        key={index}
-        href={project.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          textDecoration: "none",
-          color: "inherit"
-        }}
-      >
-        <div style={{
-          border: "1px solid #ddd",
-          padding: "1rem",
-          borderRadius: "8px",
-          background: "#fafafa",
-          transition: "0.2s",
-          cursor: "pointer"
-        }}>
-          {project.image && (
-            <img
-              src={project.image}
-              alt={project.title}
-              style={{
-                width: "100%",
-                borderRadius: "6px",
-                marginBottom: "0.75rem"
-              }}
-            />
-          )}
-
-          <h3>{project.title}</h3>
-          <p>{project.description}</p>
-        </div>
-      </a>
-    ))}
-  </div>
-</section>
+            <h2>Referenssit</h2>
+              <section id="references" className="references-section">
+                <div className="projects-grid">
+                  {projects.map((project, index) => (
+                  <a key={index} href={project.url} className="project-link">
+                  <div className="project-card">
+                      {project.image && (
+                    <img src={project.image} alt={project.title} className="project-image" />
+                  )}
+                      <h3>{project.title}</h3>
+                      <p>{project.description}</p>
+                    </div>
+                  </a>
+                  ))}
+                </div>
+              </section>
 
           </div>
         </div>

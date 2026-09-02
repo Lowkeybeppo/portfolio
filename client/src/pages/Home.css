@@ -14,6 +14,10 @@
   min-width: 0;
 }
 
+.home-right {
+  width: 70vw;
+}
+
 .leaderboard-section,
 .game-section,
 .portfolio-section {
@@ -107,7 +111,7 @@
   flex-direction: column;
   gap: 16px;
   float: right;
-  width: 70vw;
+  width: 100%;
 }
 
 .portfolio-section p {
@@ -163,6 +167,38 @@
   transition: background-color 0.3s ease;
 }
 
+.references-section {
+  padding: 2rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.project-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-card {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #fafafa;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.project-image {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+}
+
+
 .cv-link:hover {
   background-color: #555;
 }
@@ -170,6 +206,13 @@
 @media (max-width: 900px) {
   .home-container {
     grid-template-columns: 1fr;
+  }
+    .home-right {
+    width: 100%;
+  }
+
+  .portfolio-section {
+    float: none;
   }
 }
 
@@ -192,6 +235,11 @@
   background-color: #2d2d2d;
   border-color: #e0e0e0;
   color: #e0e0e0;
+}
+
+.dark-mode .project-card {
+  background: #1f1f1f;
+  border-color: #444;
 }
 
 .dark-mode .leaderboard-section > p,
