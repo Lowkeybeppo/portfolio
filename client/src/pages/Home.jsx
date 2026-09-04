@@ -117,15 +117,15 @@ export default function Home({ setCurrentPage, openAuthModal }) {
               <section id="references" className="references-section">
                 <div className="projects-grid">
                   {projects.map((project, index) => (
-                  <a key={index} href={project.url} className="project-link">
-                  <div className="project-card">
+                    <a key={index} href={project.url} className="project-link">
+                    <div className="project-card">
                       {project.image && (
-                    <img src={project.image} alt={project.title} className="project-image" />
-                  )}
+                        <img src={project.image} alt={project.title} className="project-image" />
+                      )}
                       <h3>{project.title}</h3>
                       <p>{project.description}</p>
                     </div>
-                  </a>
+                    </a>
                   ))}
                 </div>
               </section>

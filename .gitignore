@@ -1,42 +1,29 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.local
+
+# Dependencies
+node_modules/
+
+# Production builds
+dist/
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Dependencies
-node_modules/
-
-# Production
-/build
-/dist
-
-# IDE
+# Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-*.sublime-project
-*.sublime-workspace
 
-# OS
+# Operating system files
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
-
-# Environment files
-.env
-.env.local
-.env.*.local
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache

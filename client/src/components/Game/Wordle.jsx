@@ -200,7 +200,7 @@ export default function Wordle({ setCurrentPage }) {
             onChange={(e) => setGuessInput(e.target.value.toLowerCase())}
             maxLength={WORD_LENGTH}
             disabled={gameOver || loadingWord || submitting}
-            placeholder="Type a word"
+            placeholder="Kirjoita arvaus"
           />
           <button type="submit" disabled={gameOver || loadingWord || submitting}>
             {submitting ? 'Saving...' : 'Arvaa'}

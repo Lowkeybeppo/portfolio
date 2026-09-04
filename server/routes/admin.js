@@ -126,7 +126,7 @@ router.post('/words', async (req, res) => {
   try {
     const value = req.body.value?.trim().toLowerCase();
 
-    if (!/^[a-z]{5}$/.test(value || '')) {
+    if (!/^[a-zäöå]{5}$/i.test(value || '')) {
       return res.status(400).json({
         message: 'Word must contain exactly 5 letters',
       });
