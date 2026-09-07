@@ -55,6 +55,17 @@ export default function Login({ setCurrentPage, onClose }) {
         <button type="submit" disabled={loading}>
           {loading ? 'Kirjataan sisään...' : 'Kirjaudu'}
         </button>
+        <p className="privacy-link">
+          <button
+            type="button"
+            onClick={() => {
+              onClose?.()
+              setCurrentPage('privacy')
+            }}
+          >
+          Tietosuojakäytäntö
+          </button>
+        </p>
       </form>
     </div>
   )

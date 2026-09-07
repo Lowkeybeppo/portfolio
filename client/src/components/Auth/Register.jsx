@@ -10,6 +10,7 @@ export default function Register({ setCurrentPage, onClose }) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const { register } = useAuth()
+  const [privacyAccepted, setPrivacyAccepted] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -17,6 +18,11 @@ export default function Register({ setCurrentPage, onClose }) {
 
     if (password !== confirmPassword) {
       setError('Passwords do not match')
+      return
+    }
+
+    if (!privacyAccepted) {
+      setError('Hyväksy tietosuojakäytäntö ennen rekisteröitymistä')
       return
     }
 
@@ -67,6 +73,27 @@ export default function Register({ setCurrentPage, onClose }) {
         />
 
         {error && <p className="error-message">{error}</p>}
+
+        <label className="privacy-checkbox">
+        <input
+          type="checkbox"
+          checked={privacyAccepted}
+          onChange={(event) => setPrivacyAccepted(event.target.checked)}
+        />
+
+        <span>
+          Hyväksyn{' '}
+          <button
+            type="button"
+            onClick={() => {
+              onClose?.()
+              setCurrentPage('privacy')
+            }}
+          >
+            tietosuojakäytännön
+          </button>
+        </span>
+        </label>
 
         <button type="submit" disabled={loading}>
           {loading ? 'Rekisteröidään...' : 'Rekisteröidy'}

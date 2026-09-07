@@ -6,6 +6,7 @@ import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
 import Wordle from './components/Game/Wordle'
 import AdminPanel from './components/Admin/AdminPanel'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 import './App.css'
 import { useAuth } from './contexts/AuthContext'
 import { useEffect } from 'react'
@@ -54,6 +55,7 @@ useEffect(() => {
         <main className="main-content">
           {currentPage === 'home' && <Home setCurrentPage={setCurrentPage} openAuthModal={setAuthModal} />}
           {currentPage === 'game' && <Wordle setCurrentPage={setCurrentPage} />}
+          {currentPage === 'privacy' && <PrivacyPolicy onBack={() => setCurrentPage('home')} />}
         </main>
 
         <Modal
@@ -95,6 +97,7 @@ useEffect(() => {
         {currentPage === 'game' && <Wordle setCurrentPage={setCurrentPage} />}
         {currentPage === 'profile' && <div className="profile-page">Profiilisivu tulossa...</div>}
         {currentPage === 'admin' && <AdminPanel />}
+        {currentPage === 'privacy' && <PrivacyPolicy onBack={() => setCurrentPage('home')} />}
       </main>
     </div>
   )
