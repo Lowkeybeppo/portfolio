@@ -56,15 +56,16 @@ export default function Login({ setCurrentPage, onClose }) {
           {loading ? 'Kirjataan sisään...' : 'Kirjaudu'}
         </button>
         <p className="privacy-link">
-          <button
-            type="button"
-            onClick={() => {
-              onClose?.()
+          <a
+           href="#privacy"
+           onClick={(e) => {
+             e.preventDefault()
+             onClose?.()
               setCurrentPage('privacy')
             }}
           >
-          Tietosuojakäytäntö
-          </button>
+            Tietosuojakäytäntö
+          </a>
         </p>
       </form>
     </div>

@@ -83,15 +83,16 @@ export default function Register({ setCurrentPage, onClose }) {
 
         <span>
           Hyväksyn{' '}
-          <button
-            type="button"
-            onClick={() => {
+          <a
+            href="#privacy"
+           onClick={(e) => {
+             e.preventDefault()
               onClose?.()
-              setCurrentPage('privacy')
-            }}
-          >
+             setCurrentPage('privacy')
+           }}
+         >
             tietosuojakäytännön
-          </button>
+         </a>
         </span>
         </label>
 

@@ -15,6 +15,17 @@
   margin-bottom: 0.5rem;
 }
 
-.privacy-policy button {
-  cursor: pointer;
+.privacy-checkbox a,
+.privacy-link a {
+  color: #282c34;
+  text-decoration: underline;
+}
+
+.privacy-checkbox a:hover,
+.privacy-link a:hover {
+  color: #404853;
+}
+
+.dark-mode .privacy-checkbox span {
+  color: black;
 }

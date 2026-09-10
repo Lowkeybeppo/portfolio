@@ -10,15 +10,15 @@ export default function PrivacyPolicy({ onBack }) {
       <h1>Tietosuojakäytäntö</h1>
 
       <p>
-        <strong>Viimeksi päivitetty:</strong> [päivämäärä]
+        <strong>Viimeksi päivitetty:</strong> 8.9.2026
       </p>
 
       <h2>1. Rekisterinpitäjä</h2>
       <p>
-        Rekisterinpitäjä on [oma nimi / yrityksen nimi].
+        Rekisterinpitäjä on Riku Luostari.
       </p>
       <p>
-        Yhteystiedot: [sähköpostiosoite]
+        Yhteystiedot: riku.luostari@sähköposti.fi
       </p>
 
       <h2>2. Käsiteltävät tiedot</h2>
@@ -48,7 +48,7 @@ export default function PrivacyPolicy({ onBack }) {
       <h2>6. Yhteydenotot</h2>
       <p>
         Tietosuojaa koskevissa asioissa voit ottaa yhteyttä osoitteeseen
-        [sähköpostiosoite].
+        riku.luostari@sähköposti.fi.
       </p>
     </main>
   )
