@@ -6,24 +6,31 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
+const usernameRegex = /^[a-zäöåA-ZÄÖÅ0-9_]{2,30}$/; // Käyttäjätunnus voi sisältää kirjaimia, numeroita ja alaviivoja, ja sen pituus on 2-30 merkkiä.
+
 // rekisteröinti
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
   
   try {
     // Tarkistetaan, että käyttäjätunnus ja salasana on annettu ja että salasana on vähintään 6 merkkiä pitkä.
+
     if (!username || !password) {
-      return res.status(400).json({ message: 'Username and password required' });
+      return res.status(400).json({ message: 'Syötä käyttäjätunnus ja salasana' });
     }
     
+    if (!usernameRegex.test(username)) {
+      return res.status(400).json({ message: 'Käyttäjätunnus voi sisältää vain kirjaimia, numeroita ja alaviivoja, ja sen pituus on 2-30 merkkiä' });
+    }
+
     if (password.length < 6) {
-      return res.status(400).json({ message: 'Password must be at least 6 characters' });
+      return res.status(400).json({ message: 'Salasana täytyy olla vähintään 6 merkkiä pitkä' });
     }
 
 // Tarkistetaan onko käyttäjätunnus jo olemassa.
     let user = await User.findOne({ username });
     if (user) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: 'Käyttäjätunnus on jo käytössä' });
     }
 
 // Salasanaa ei tallenneta sellaisenaan.
@@ -52,17 +59,21 @@ router.post('/login', async (req, res) => {
 
   try {
     if (!username || !password) {
-      return res.status(400).json({ message: 'Username and password required' });
+      return res.status(400).json({ message: 'Syötä käyttäjätunnus ja salasana' });
+    }
+
+    if (!usernameRegex.test(username)) {
+      return res.status(400).json({ message: 'Käyttäjätunnus voi sisältää vain kirjaimia, numeroita ja alaviivoja, ja sen pituus on 2-30 merkkiä' });
     }
 
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Virheelliset kirjautumistiedot' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Virheelliset kirjautumistiedot' });
     }
 
     const payload = { user: { id: user._id, isAdmin: user.isAdmin } };
@@ -87,7 +98,7 @@ router.post('/admin-login', async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Virheelliset kirjautumistiedot' });
     }
 
     const payload = { user: { id: user._id, isAdmin: true } };

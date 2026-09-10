@@ -28,7 +28,7 @@ router.get('/word', async (req, res) => {
 
     if (!randomWord) {
       return res.status(500).json({
-        message: 'No active words are available',
+        message: 'Ei löytynyt aktiivisia sanoja. Lisää sanoja tietokantaan.',
       });
     }
 
@@ -56,7 +56,7 @@ router.get('/word', async (req, res) => {
       throw error;
     }
   } catch (error) {
-    console.error('Failed to get daily word:', error);
+    console.error('Päivän sanan haku epäonnistui:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -67,7 +67,7 @@ router.post('/submit', auth, async (req, res) => {
     const { word, attempts, time } = req.body;
 
     if (!word || !attempts || !time) {
-      return res.status(400).json({ message: 'Missing game result fields' });
+      return res.status(400).json({ message: 'Päivitä kaikki tarvittavat kentät' });
     }
 
     const score = new GameScore({
@@ -81,7 +81,7 @@ router.post('/submit', auth, async (req, res) => {
     await score.save();
 
     res.json({
-      message: 'Game result saved',
+      message: 'Pelitulos tallennettu',
       score: {
         id: score._id,
         attempts: score.attempts,

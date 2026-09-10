@@ -24,7 +24,7 @@ router.patch('/users/:id', async (req, res) => {
 
     const user = await User.findById(req.params.id);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Käyttäjää ei löydy' });
     }
 
     if (username) user.username = username;
@@ -33,7 +33,7 @@ router.patch('/users/:id', async (req, res) => {
     await user.save();
 
     res.json({
-      message: 'User updated',
+      message: 'Käyttäjätiedot päivitetty',
       user: {
         id: user._id,
         username: user.username,
@@ -50,10 +50,10 @@ router.delete('/users/:id', async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Käyttäjää ei löydy' });
     }
 
-    res.json({ message: 'User deleted' });
+    res.json({ message: 'Käyttäjä poistettu' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -77,10 +77,10 @@ router.delete('/game-scores/:id', async (req, res) => {
   try {
     const score = await GameScore.findByIdAndDelete(req.params.id);
     if (!score) {
-      return res.status(404).json({ message: 'Score not found' });
+      return res.status(404).json({ message: 'Pelitulosta ei löydy' });
     }
 
-    res.json({ message: 'Score deleted' });
+    res.json({ message: 'Pelitulos poistettu' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -128,7 +128,7 @@ router.post('/words', async (req, res) => {
 
     if (!/^[a-zäöå]{5}$/i.test(value || '')) {
       return res.status(400).json({
-        message: 'Word must contain exactly 5 letters',
+        message: 'Sanan on oltava tarkalleen 5 kirjainta pitkä ja sisältää vain kirjaimia',
       });
     }
 
@@ -136,7 +136,7 @@ router.post('/words', async (req, res) => {
     res.status(201).json(word);
   } catch (error) {
     if (error.code === 11000) {
-      return res.status(409).json({ message: 'Word already exists' });
+      return res.status(409).json({ message: 'Sana on jo olemassa' });
     }
 
     res.status(500).json({ message: 'Server error' });
@@ -152,7 +152,7 @@ router.patch('/words/:id', async (req, res) => {
     );
 
     if (!word) {
-      return res.status(404).json({ message: 'Word not found' });
+      return res.status(404).json({ message: 'Sanaa ei löydy' });
     }
 
     res.json(word);
@@ -166,10 +166,10 @@ router.delete('/words/:id', async (req, res) => {
     const word = await Word.findByIdAndDelete(req.params.id);
 
     if (!word) {
-      return res.status(404).json({ message: 'Word not found' });
+      return res.status(404).json({ message: 'Sanaa ei löydy' });
     }
 
-    res.json({ message: 'Word deleted' });
+    res.json({ message: 'Sana poistettu' });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
