@@ -44,48 +44,6 @@ Full-stack-portfolio, joka sisältää henkilökohtaisen esittelyn, projektit, s
 - CORS
 - dotenv
 
-## Projektin rakenne
-
-portfolio/
-├── client/                         # React-frontend
-│   ├── public/                     # Julkiset kuvat, CV ja muut tiedostot
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Admin/              # Admin-paneeli
-│   │   │   ├── Auth/               # Kirjautuminen ja rekisteröityminen
-│   │   │   └── Game/               # Päivän sana -peli
-│   │   ├── contexts/
-│   │   │   └── AuthContext.jsx     # Käyttäjän autentikoinnin tila
-│   │   ├── hooks/
-│   │   │   └── useGame.js          # Pelitulosten ja tilastojen API-kutsut
-│   │   ├── pages/                  # Sivunäkymät
-│   │   ├── utils/
-│   │   │   └── api.js              # Axios API-asiakas
-│   │   ├── App.jsx                 # Sovelluksen pääkomponentti
-│   │   └── main.jsx                # React-sovelluksen käynnistys
-│   ├── package.json
-│   └── vite.config.js
-│
-├── server/                         # Express-backend
-│   ├── database/
-│   │   └── connection.js           # MongoDB-yhteys
-│   ├── middleware/
-│   │   └── auth.js                 # JWT- ja admin-tarkistukset
-│   ├── models/
-│   │   ├── User.js                 # Käyttäjämalli
-│   │   ├── GameScore.js            # Pelitulosten malli
-│   │   ├── Word.js                 # Sanaston malli
-│   │   └── DailyWord.js            # Päivän sanan malli
-│   ├── routes/
-│   │   ├── auth.js                 # Autentikointireitit
-│   │   ├── game.js                 # Pelireitit
-│   │   └── admin.js                # Admin-reitit
-│   ├── .env
-│   ├── package.json
-│   └── server.js                   # Express-palvelimen käynnistys
-│
-├── .gitignore
-└── README.md
 
 
 ## Vaatimukset
