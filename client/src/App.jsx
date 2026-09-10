@@ -14,12 +14,14 @@ import { useEffect } from 'react'
 function App() {
   const { user, logout, loading } = useAuth()
   const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') === 'dark')
+// Teema palautetaan localStoragesta, jotta käyttäjän valinta säilyy sivulatausten välillä.
 
+// Tallennetaan valittu teema ja lisätään tai poistetaan dark-mode-luokka <html>-elementistä, jotta CSS voi käyttää sitä tyylien määrittelyyn.
 useEffect(() => {
   localStorage.setItem('theme', isDark ? 'dark' : 'light')
   document.documentElement.classList.toggle('dark-mode', isDark)
 }, [isDark])
-  const [currentPage, setCurrentPage] = useState('home')
+  const [currentPage, setCurrentPage] = useState('home') // Sovelluksen nykyinen näkymä. Reititykseen ei käytetä React Routeria, vaan näkymä vaihdetaan tilamuuttujan avulla.
   const [authModal, setAuthModal] = useState(null) // 'login' | 'register' | null
 
   const openAuthModal = (type) => setAuthModal(type)

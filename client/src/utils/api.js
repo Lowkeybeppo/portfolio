@@ -9,7 +9,7 @@ const api = axios.create({
   },
 })
 
-// Add token to requests
+// Liitetään JWT-token automaattisesti kaikkiin API-pyyntöihin, jotka vaativat kirjautuneen käyttäjän.
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   if (token) {

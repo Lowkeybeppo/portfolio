@@ -3,9 +3,14 @@ import './Wordle.css';
 import api from '../../utils/api';
 import { useGame } from '../../hooks/useGame';
 
-const WORD_LENGTH = 5;
-const MAX_ATTEMPTS = 6;
+const WORD_LENGTH = 5; // Pelissä arvattavan sanan pituus.
+const MAX_ATTEMPTS = 6; // Pelaajalla on enintään kuusi arvausyritystä.
 
+
+// Arvioi arvauksen kahdessa vaiheessa:
+// ensin merkitään oikeilla paikoilla olevat kirjaimet,
+// minkä jälkeen etsitään oikeat kirjaimet vääristä paikoista.
+// used-taulukko estää saman kohdekirjaimen käyttämisen useita kertoja.
 function evaluateGuess(guess, target) {
   const result = [];
   const targetLetters = target.split('');
@@ -47,8 +52,10 @@ export default function Wordle({ setCurrentPage }) {
   const [loadingWord, setLoadingWord] = useState(true);
   const [keyStatuses, setKeyStatuses] = useState({});
   const { submitGame, loading: submitting } = useGame();
-  const [startTime] = useState(() => Date.now());
+  const [startTime] = useState(() => Date.now()); // Aloitusaika säilytetään samana koko pelin ajan jotta voidaan laskea kulunut aika oikein.
 
+// Haetaan päivän sana palvelimelta ennen kuin pelaaminen sallitaan.
+// Pelin käyttöliittymä pidetään lataustilassa pyynnön ajan.
   useEffect(() => {
     const fetchWord = async () => {
       try {
@@ -89,6 +96,8 @@ export default function Wordle({ setCurrentPage }) {
     setGuessInput((prev) => prev.slice(0, -1));
   };
 
+// Tarkistetaan arvaus, päivitetään pelin tila ja tallennetaan tulos,
+// jos pelaaja voittaa tai kaikki yritykset on käytetty.
   const handleGuess = async (e) => {
     e?.preventDefault();
 

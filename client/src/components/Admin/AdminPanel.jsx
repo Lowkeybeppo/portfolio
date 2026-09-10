@@ -14,7 +14,7 @@ export default function AdminPanel() {
   const fetchAdminData = async () => {
     try {
       setLoading(true)
-
+// Admin-paneelin kaikki tarvitsemat tiedot haetaan rinnakkain, jotta sovellus ei odota turhaan yhden pyynnön valmistumista ennen seuraavaa.
       const [usersRes, scoresRes, statsRes, wordsRes] = await Promise.all([
         api.get('/admin/users'),
         api.get('/admin/game-scores'),

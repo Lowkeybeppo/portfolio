@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 
+// Tarkistetaan Authorization-headerista löytyvä Bearer-token ja tallennetaan tokenin käyttäjätiedot req.user-objektiin.
 export const auth = (req, res, next) => {
   const header = req.header('Authorization');
 
@@ -17,6 +18,7 @@ export const auth = (req, res, next) => {
   }
 };
 
+// Tämä middleware sallii pyynnön vain käyttäjälle, jolla on admin-oikeudet. Jos käyttäjä ei ole admin, palautetaan 403 Forbidden.
 export const isAdmin = (req, res, next) => {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).json({ message: 'Admin access denied' });

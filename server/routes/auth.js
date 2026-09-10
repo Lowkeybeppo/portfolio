@@ -6,12 +6,12 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-// Register
+// rekisteröinti
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
   
   try {
-    // Validate input
+    // Tarkistetaan, että käyttäjätunnus ja salasana on annettu ja että salasana on vähintään 6 merkkiä pitkä.
     if (!username || !password) {
       return res.status(400).json({ message: 'Username and password required' });
     }
@@ -20,20 +20,22 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Password must be at least 6 characters' });
     }
 
-    // Check if user already exists
+// Tarkistetaan onko käyttäjätunnus jo olemassa.
     let user = await User.findOne({ username });
     if (user) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Hash password and create user
+// Salasanaa ei tallenneta sellaisenaan.
+// Ennen tallennusta siitä luodaan bcrypt-hash.
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     
     user = new User({ username, password: hashedPassword });
     await user.save();
     
-    // Create JWT token
+// Token sisältää käyttäjän tunnisteen ja admin-oikeuden,
+// ja se vanhenee yhden tunnin kuluttua.
     const payload = { user: { id: user.id, isAdmin: user.isAdmin } };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
     

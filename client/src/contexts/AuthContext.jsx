@@ -7,6 +7,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
+// Tarkistetaan selaimeen tallennettu token sovelluksen käynnistyessä.
+// Näin käyttäjän ei tarvitse kirjautua uudelleen jokaisella sivulatauksella.
   useEffect(() => {
   const restoreSession = async () => {
     const token = localStorage.getItem('token')
@@ -19,8 +21,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.get('/auth/me')
       setUser(response.data)
-    } catch {
-      localStorage.removeItem('token')
+    } catch { 
+      localStorage.removeItem('token') //Vanhentunut tai virheellinen tokeni poistetaan jotta sovellus ei yrittäisi käyttää sitä uudelleen.
       setUser(null)
     } finally {
       setLoading(false)

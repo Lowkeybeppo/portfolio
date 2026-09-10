@@ -1,158 +1,243 @@
-# Portfolio - MERN Stack Wordle Game
+# Portfolio ja Päivän sana -peli
 
-A full-stack MERN application featuring a portfolio site with an integrated Wordle-type game, user authentication, and admin panel.
+Full-stack-portfolio, joka sisältää henkilökohtaisen esittelyn, projektit, sertifikaatit sekä kirjautumista vaativan suomalaisen Wordle-tyyppisen Päivän sana -pelin.
 
-## Features
+## Ominaisuudet
 
--  **Wordle Game** - Interactive word guessing game
--  **User Authentication** - Register and login (no email verification required)
--  **User Stats** - Track game performance and statistics
--  **Admin Panel** - CRUD operations on users and game data
--  **Account Deletion** - Users can delete their own accounts
--  **Leaderboard** - Global player rankings
+- Portfolio ja projektien esittely
+- CV:n ja sertifikaattien näyttäminen
+- Päivän sana -peli
+- Viiden kirjaimen arvauspeli, jossa on enintään kuusi yritystä
+- Päivittäinen sana, joka valitaan sanastosta ja tallennetaan päivämäärän perusteella
+- Käyttäjän rekisteröinti ja kirjautuminen
+- JWT-pohjainen autentikointi
+- Pelitulosten tallentaminen
+- Henkilökohtaiset pelitilastot
+- Pelaajien leaderboard
+- Tumma ja vaalea teema
+- Tietosuojakäytännön hyväksyminen rekisteröityessä
+- Admin-paneeli
+  - käyttäjien tarkastelu ja poistaminen
+  - admin-oikeuksien muuttaminen
+  - pelitulosten tarkastelu ja poistaminen
+  - järjestelmän tilastot
+  - pelissä käytettävien sanojen lisääminen, aktivointi ja poistaminen
 
-## Tech Stack
+## Teknologiat
 
 ### Frontend
-- **React 18** - UI library
-- **Vite** - Build tool
-- **React Router** - Client-side routing
-- **Axios** - HTTP client
+
+- React 18
+- Vite
+- Axios
+- React Modal
+- CSS
 
 ### Backend
-- **Node.js** - Runtime environment
-- **Express** - Web framework
-- **MongoDB** - Database
-- **Mongoose** - ODM library
-- **JWT** - Authentication
-- **Bcrypt** - Password hashing
 
-## Project Structure
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- JSON Web Token
+- bcryptjs
+- CORS
+- dotenv
 
-```
+## Projektin rakenne
+
 portfolio/
-├── client/                 # React frontend
-│   ├── public/
+├── client/                         # React-frontend
+│   ├── public/                     # Julkiset kuvat, CV ja muut tiedostot
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Game/      # Wordle game component
-│   │   │   ├── Auth/      # Login/Register components
-│   │   │   └── Admin/     # Admin panel component
-│   │   ├── pages/
+│   │   │   ├── Admin/              # Admin-paneeli
+│   │   │   ├── Auth/               # Kirjautuminen ja rekisteröityminen
+│   │   │   └── Game/               # Päivän sana -peli
+│   │   ├── contexts/
+│   │   │   └── AuthContext.jsx     # Käyttäjän autentikoinnin tila
 │   │   ├── hooks/
-│   │   ├── contexts/      # React context for auth
-│   │   ├── utils/         # API client, helpers
-│   │   ├── App.jsx
-│   │   └── main.jsx
+│   │   │   └── useGame.js          # Pelitulosten ja tilastojen API-kutsut
+│   │   ├── pages/                  # Sivunäkymät
+│   │   ├── utils/
+│   │   │   └── api.js              # Axios API-asiakas
+│   │   ├── App.jsx                 # Sovelluksen pääkomponentti
+│   │   └── main.jsx                # React-sovelluksen käynnistys
 │   ├── package.json
 │   └── vite.config.js
 │
-├── server/                # Node/Express backend
-│   ├── models/            # MongoDB schemas
-│   │   ├── User.js
-│   │   └── GameScore.js
-│   ├── routes/
-│   │   ├── auth.js        # Auth endpoints
-│   │   ├── game.js        # Game endpoints
-│   │   └── admin.js       # Admin endpoints
-│   ├── middleware/
-│   │   └── auth.js        # JWT verification
-│   ├── controllers/       # Business logic
+├── server/                         # Express-backend
 │   ├── database/
-│   │   └── connection.js
-│   ├── .env.example
+│   │   └── connection.js           # MongoDB-yhteys
+│   ├── middleware/
+│   │   └── auth.js                 # JWT- ja admin-tarkistukset
+│   ├── models/
+│   │   ├── User.js                 # Käyttäjämalli
+│   │   ├── GameScore.js            # Pelitulosten malli
+│   │   ├── Word.js                 # Sanaston malli
+│   │   └── DailyWord.js            # Päivän sanan malli
+│   ├── routes/
+│   │   ├── auth.js                 # Autentikointireitit
+│   │   ├── game.js                 # Pelireitit
+│   │   └── admin.js                # Admin-reitit
 │   ├── .env
-│   ├── server.js
-│   └── package.json
+│   ├── package.json
+│   └── server.js                   # Express-palvelimen käynnistys
 │
 ├── .gitignore
 └── README.md
-```
 
-## Getting Started
 
-### Prerequisites
-- Node.js (v16 or higher)
-- MongoDB (local or Atlas)
-- npm or yarn
+## Vaatimukset
 
-### Installation
+- Node.js 16 tai uudempi
+- npm
+- MongoDB paikallisesti tai MongoDB Atlas -palveluna
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd portfolio
-   ```
+## Asennus
 
-2. **Setup Backend**
-   ```bash
-   cd server
-   npm install
-   ```
-   - Update `.env` file with your MongoDB URI and JWT secrets
+### 1. Asenna backendin riippuvuudet
 
-3. **Setup Frontend**
-   ```bash
-   cd ../client
-   npm install
-   ```
-
-### Running the Application
-
-**Terminal 1 - Backend:**
-```bash
 cd server
-npm run dev
-```
-Server will run on `http://localhost:5000`
+npm install
 
-**Terminal 2 - Frontend:**
-```bash
-cd client
-npm run dev
-```
-Client will run on `http://localhost:3000`
 
-## API Endpoints
+Luo `server/.env`-tiedosto ja lisää siihen tarvittavat ympäristömuuttujat:
 
-### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - User login
-- `POST /api/auth/admin-login` - Admin login
-- `DELETE /api/auth/delete-account` - Delete user account
-- `GET /api/auth/me` - Get current user info
-
-### Game
-- `POST /api/game/submit` - Submit game result
-- `GET /api/game/stats` - Get user stats
-- `GET /api/game/leaderboard` - Get global leaderboard
-
-### Admin
-- `GET /api/admin/users` - Get all users
-- `DELETE /api/admin/users/:id` - Delete user
-- `GET /api/admin/stats` - Get system stats
-- `GET /api/admin/game-scores` - Get all game scores
-
-## Environment Variables
-
-### Server (.env)
-```
 MONGODB_URI=mongodb://localhost:27017/portfolio
 PORT=5000
-JWT_SECRET=your_jwt_secret_key_here
-ADMIN_SECRET=your_admin_secret_key_here
+JWT_SECRET=vaihda_tama_salaiseksi_avaimeksi
 NODE_ENV=development
-```
 
-## Next Steps
 
-- [ ] Implement authentication logic
-- [ ] Build Wordle game mechanics
-- [ ] Create user profile page
-- [ ] Implement admin dashboard
-- [ ] Add game leaderboard
-- [ ] Deploy to production
+### 2. Asenna frontendin riippuvuudet
 
-## License
+cd ../client
+npm install
+
+
+Frontend käyttää Vite-kehityspalvelimen proxy-asetusta, joka välittää `/api`-pyynnöt backendille osoitteeseen `http://localhost:5000`.
+
+## Sovelluksen käynnistäminen
+
+Käynnistä backend ensimmäisessä terminaalissa:
+
+cd server
+npm run dev
+
+
+Backend käynnistyy osoitteeseen:
+
+http://localhost:5000
+
+
+Käynnistä frontend toisessa terminaalissa:
+
+cd client
+npm run dev
+
+
+Frontend avautuu osoitteeseen:
+
+http://localhost:3000
+
+
+## API-reitit
+
+### Autentikointi
+
+| Menetelmä | Reitti | Kuvaus |
+|---|---|---|
+| POST | `/api/auth/register` | Luo uuden käyttäjän |
+| POST | `/api/auth/login` | Kirjaa käyttäjän sisään |
+| POST | `/api/auth/admin-login` | Admin-kirjautuminen |
+| GET | `/api/auth/me` | Hakee kirjautuneen käyttäjän tiedot |
+| DELETE | `/api/auth/delete-account` | Poistaa oman käyttäjätilin |
+
+### Peli
+
+| Menetelmä | Reitti | Kuvaus |
+|---|---|---|
+| GET | `/api/game/word` | Hakee päivän sanan |
+| POST | `/api/game/submit` | Tallentaa pelituloksen |
+| GET | `/api/game/stats` | Hakee käyttäjän pelitilastot |
+| GET | `/api/game/leaderboard` | Hakee leaderboardin |
+
+### Admin
+
+Admin-reitit vaativat kirjautuneen admin-käyttäjän.
+
+| Menetelmä | Reitti | Kuvaus |
+|---|---|---|
+| GET | `/api/admin/users` | Hakee kaikki käyttäjät |
+| PATCH | `/api/admin/users/:id` | Muokkaa käyttäjää tai admin-oikeuksia |
+| DELETE | `/api/admin/users/:id` | Poistaa käyttäjän |
+| GET | `/api/admin/game-scores` | Hakee kaikki pelitulokset |
+| DELETE | `/api/admin/game-scores/:id` | Poistaa pelituloksen |
+| GET | `/api/admin/stats` | Hakee järjestelmän tilastot |
+| GET | `/api/admin/words` | Hakee pelin sanaston |
+| POST | `/api/admin/words` | Lisää uuden sanan |
+| PATCH | `/api/admin/words/:id` | Aktivoi tai poistaa sanan käytöstä |
+| DELETE | `/api/admin/words/:id` | Poistaa sanan |
+
+### Terveystarkistus
+
+
+GET /api/health
+
+Palauttaa tiedon siitä, että backend-palvelin on käynnissä.
+
+## Komennot
+
+### Frontend
+
+
+npm run dev
+
+Käynnistää Vite-kehityspalvelimen.
+
+
+npm run build
+
+Luo tuotantoversion.
+
+
+npm run preview
+
+Esikatselee tuotantoversion paikallisesti.
+
+
+npm run lint
+
+Suorittaa ESLint-tarkistuksen.
+
+### Backend
+
+
+npm run dev
+
+Käynnistää backendin Nodemonin avulla.
+
+
+npm start
+
+Käynnistää backendin ilman Nodemonia.
+
+## Tietoturva
+
+- Salasanat tallennetaan tietokantaan hashattuina bcryptjs-kirjaston avulla.
+- Kirjautuminen perustuu JWT-tokeneihin.
+- JWT-token tallennetaan selaimen local storageen.
+- Admin-reitit tarkistavat sekä kirjautumisen että admin-oikeuden.
+- `.env`-tiedostoja ei pidä lisätä versionhallintaan.
+
+## Nykyiset rajoitukset
+
+- Profiilisivu on vielä keskeneräinen.
+- Sovelluksessa ei ole sähköpostivahvistusta.
+- Peli vaatii kirjautumisen ennen pelaamista.
+- Pelin sanaston hallinta tapahtuu admin-paneelin kautta.
+
+## Lisenssi
 
 ISC

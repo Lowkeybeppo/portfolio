@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Vain aktiiviset sanat voidaan arpoa päivän sanaksi.
 const wordSchema = new mongoose.Schema({
   value: {
     type: String,

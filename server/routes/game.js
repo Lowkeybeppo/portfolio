@@ -6,6 +6,8 @@ import DailyWord from '../models/DailyWord.js';
 
 const router = express.Router();
 
+// Päivälle arvotaan vain yksi sana.
+// Aiemmin luotu sana palautetaan kaikille saman päivän pelaajille.
 router.get('/word', async (req, res) => {
   try {
     const date = new Date().toISOString().slice(0, 10);
@@ -41,10 +43,10 @@ router.get('/word', async (req, res) => {
         date: assignment.date,
       });
     } catch (error) {
-      // Another request may have created today's word first.
+// Jos päivälle on jo arvottu sana, palautetaan se. Tämä voi tapahtua, jos useampi pelaaja yrittää hakea päivän sanaa samaan aikaan.
       if (error.code === 11000) {
         const assignment = await DailyWord.findOne({ date }).lean();
-
+// tietokannan unique-rajoite ratkaisee tilanteen ja toinen pyyntö hakee jo arvotun sanan.
         return res.json({
           word: assignment.word,
           date: assignment.date,
@@ -59,6 +61,7 @@ router.get('/word', async (req, res) => {
   }
 });
 
+// Pelitulos liitetään kirjautuneeseen käyttäjään middlewarella saadun req.user.id avulla. Jos käyttäjä ei ole kirjautunut, pyyntö hylätään 401 Unauthorized-virheellä.
 router.post('/submit', auth, async (req, res) => {
   try {
     const { word, attempts, time } = req.body;
@@ -71,7 +74,7 @@ router.post('/submit', auth, async (req, res) => {
       user: req.user.id,
       word,
       attempts,
-      won: attempts <= 6,
+      won: attempts <= 6, // Kuuden tai sitä pienemmän yritysmäärän katsotaan olevan voitto. Tähän voidaan myöhemmin lisätä tarkempi logiikka, jos halutaan erotella voitto ja tappio.
       time,
     });
 
